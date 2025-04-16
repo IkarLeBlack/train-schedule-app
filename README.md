@@ -1,95 +1,164 @@
-# 🚆 Train Schedule App – Backend
+# 🚆 Train Schedule App – Fullstack Project
 
-This is the backend of the **Train Schedule App**, built with [NestJS](https://nestjs.com/) and [Prisma ORM](https://www.prisma.io/). It provides user authentication with JWT, user management, and train schedule management.
+A fullstack web application for managing and viewing train schedules. The project includes:
 
-## 📂 Project Structure
+- A **backend** built with **NestJS**, **Prisma**, **PostgreSQL**, and **JWT authentication**
+- A **frontend** built with **Next.js**, **React**, **Tailwind CSS**, and **TypeScript**
+
+---
+
+## 📁 Project Structure
 
 ```
-train-schedule-app/backend
-├── prisma/                    # Prisma schema and migrations
-├── src/
-│   ├── controllers/           # REST API controllers (auth, trains, users)
-│   ├── dto/                   # Data Transfer Objects (validation schemas)
-│   ├── modules/               # NestJS modules
-│   ├── services/              # Business logic and DB access
-│   ├── strategies/            # JWT strategy
-│   ├── main.ts                # App bootstrap
-│   └── app.module.ts          # Root module
+train-schedule-app/
+├── backend/                # NestJS + Prisma API
+├── frontend/               # Next.js + Tailwind CSS app
 ```
 
-## ⚙️ Technologies Used
+---
 
-- **NestJS** – Progressive Node.js framework
-- **Prisma** – Type-safe database ORM
-- **PostgreSQL** (or any other supported DB via Prisma)
-- **JWT** – JSON Web Token authentication
-- **bcrypt** – Password hashing
-- **TypeScript**
+## 🌐 Live Features
 
-## 📦 Installation
+### ✅ Backend (NestJS)
+- User registration and login
+- JWT-based authentication
+- Train CRUD operations (create, read, delete)
+- Modular NestJS architecture with Prisma ORM
+
+### ✅ Frontend (Next.js)
+- Authenticated routes with session via `localStorage`
+- Responsive interface styled with Tailwind CSS
+- Forms for adding/editing train data
+- Protected routes with automatic redirect to login
+
+---
+
+## ⚙️ Technologies
+
+| Area        | Tech Stack                                       |
+|-------------|--------------------------------------------------|
+| **Backend** | NestJS, Prisma ORM, PostgreSQL, JWT, TypeScript  |
+| **Frontend**| Next.js 14, React 18, Tailwind CSS, TypeScript   |
+
+---
+
+## 🚀 Getting Started
+
+### 🔧 Prerequisites
+- Node.js >= 18
+- PostgreSQL (or any Prisma-supported DB)
+
+---
+
+## 🛠️ Backend Setup (`/backend`)
 
 ```bash
-git clone https://github.com/your-repo/train-schedule-app.git
-cd train-schedule-app/backend
+cd backend
 npm install
 ```
 
-## 🔧 Configuration
-
-Create a `.env` file in the `backend/` directory:
+### Create `.env` file
 
 ```env
-DATABASE_URL="your-database-url"
-JWT_SECRET="your-secret-key"
+DATABASE_URL=postgresql://user:password@localhost:5432/train_db
+JWT_SECRET=your_jwt_secret
 ```
 
-> Replace `your-database-url` with your PostgreSQL/MySQL connection string.
-
-## 🛠️ Prisma Setup
+### Prisma setup
 
 ```bash
 npx prisma generate
 npx prisma migrate dev --name init
 ```
 
-## 🚀 Run the Application
+### Run server
 
 ```bash
 npm run start:dev
 ```
 
-The server will run on `http://localhost:3000`.
+API will be available at `http://localhost:3001`
 
-## 🛡️ API Endpoints
+---
 
-### Auth
+## 💻 Frontend Setup (`/frontend`)
 
-- `POST /auth/register` – Register new user
-- `POST /auth/login` – Login and get JWT token
+```bash
+cd frontend
+npm install
+```
 
-### Trains
+> Optionally, create `.env.local`:
 
-- `POST /trains` – Create a new train
-- `GET /trains` – Get all trains
-- `GET /trains/:id` – Get train by ID
-- `DELETE /trains/:id` – Delete a train
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
 
-### Users
+### Run development server
 
-- `GET /users` – Get all users
-- `GET /users/:id` – Get user by ID
+```bash
+npm run dev
+```
 
-## 🧪 Scripts
+App runs at `http://localhost:3000`
+
+---
+
+## 🔐 Authentication Flow
+
+- Users register or log in to receive a JWT token
+- Token is stored in `localStorage`
+- Protected pages (`/trains`) require a valid token
+- All requests include `Authorization: Bearer <token>` header
+
+---
+
+## 🛣️ API Routes Overview
+
+| Method | Endpoint         | Description                  |
+|--------|------------------|------------------------------|
+| POST   | `/auth/register` | Register new user            |
+| POST   | `/auth/login`    | Authenticate and get token   |
+| GET    | `/trains`        | Get all train records        |
+| POST   | `/trains`        | Create new train             |
+| DELETE | `/trains/:id`    | Delete train by ID           |
+| GET    | `/users`         | Get all users (admin use)    |
+
+---
+
+## 📱 UI Pages Overview
+
+| Page        | Route       | Access         | Description                    |
+|-------------|-------------|----------------|--------------------------------|
+| Home        | `/`         | Public         | Welcome & navigation           |
+| Login       | `/login`    | Public         | User login form                |
+| Register    | `/register` | Public         | User registration              |
+| Train List  | `/trains`   | Authenticated  | Manage trains (CRUD UI)        |
+
+---
+
+## 📋 Scripts Summary
+
+### Backend
 
 ```json
-"scripts": {
-  "start": "nest start",
-  "start:dev": "nest start --watch",
-  "build": "nest build",
-  "format": "prettier --write \"src/**/*.ts\"",
-  "lint": "eslint \"src/**/*.ts\" --fix",
-  "prisma:generate": "prisma generate",
-  "prisma:migrate": "prisma migrate dev"
-}
+"start:dev": "nest start --watch",
+"prisma:generate": "prisma generate",
+"prisma:migrate": "prisma migrate dev"
 ```
+
+### Frontend
+
+```json
+"dev": "next dev",
+"build": "next build",
+"start": "next start"
+```
+
+---
+
+## 📄 License
+
+MIT License
+
 
